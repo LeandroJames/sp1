@@ -31,9 +31,12 @@ class PersonalDetails {
   constructor() {
     if (this.constructor == PersonalDetails) {
       throw Error(
-        "This information is private and you, my dear, are allowed no access"
+        "This information is private and you, my dear, have been granted no access"
       );
     }
   }
 }
-console.log(new PersonalDetails());
+//Below are different attempts at creating an instance of the abstract class:
+//console.log(new PersonalDetails());
+//console.log(new PersonalDetails("johnsnow@thenorth.org"));
+const Baby_Jane = new PersonalDetails("jane_the_babe@email.com", "ES250125358478925")
