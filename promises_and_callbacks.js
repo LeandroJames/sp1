@@ -56,16 +56,14 @@ let salaries = [
 const getEmployee = (id) => {
   const findEmployee = new Promise((resolve, reject) => {
     const employee = employees.find((elemement) => elemement.id === id);
-    employee
-      ? resolve(employee)
-      : reject(`No employee found with id ${id}`);
+    employee ? resolve(employee) : reject(`No employee found with id ${id}`);
   });
   findEmployee.then(
     (employee) => console.log(`Employee name: ${employee.name}`),
     (reason) => {
-        throw new Error (reason)
-    });
-  
+      throw new Error(reason);
+    }
+  );
 };
 
 // Crea una altra arrow function getSalary() similar a l'anterior que rebi com a paràmetre un objecte employee i retorni el seu salari.
@@ -78,22 +76,23 @@ const getSalary = (id) => {
   retrieveSalary.then(
     (salary) => console.log(`Employee salary: ${salary.salary}`),
     (reason) => {
-        throw new Error (reason)
-    })
-    // .catch((error)=>console.error(error.message)
-    // );
+      throw new Error(reason);
+    }
+  );
+  // .catch((error)=>console.error(error.message)
+  // );
 };
 
 //Invoca la primera funció getEmployee() i després getSalary() niant l'execució de les dues promises de manera que es retorni per la consola el nom de l'empleat/da i el seu salari.
 
 const getFullEmployeeInfo = (id) => {
   try {
-  getEmployee(id);
-  getSalary(id)
+    getEmployee(id);
+    getSalary(id);
+  } catch (error) {
+    console.error(error.message);
   }
-  catch {(e) => console.error(e.message)
-}
 };
-getFullEmployeeInfo(22)
+getFullEmployeeInfo(22);
 
 //Fixa un element catch a la invocació del nivell anterior que capturi qualsevol error i el mostri per la consola.
