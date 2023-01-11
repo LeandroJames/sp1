@@ -47,12 +47,13 @@ const getSalary = (id) => {
 const getFullEmployeeInfo = async (soughtEmployee) => {
   getEmployee(soughtEmployee).then(
     (employee) => {
-    let name=employee.name
-    getSalary(soughtEmployee, name).then(
-      (salary) => {
-        console.log(`EMPLOYEE ~ Name: ${name}, Salary: ${salary.salary}`)
-      }
-    )})
+      let name = employee.name
+      getSalary(soughtEmployee, name).then(
+        (salary) => {
+          console.log(`EMPLOYEE ~ Name: ${name}, Salary: ${salary.salary}`)
+        }
+      )
+    })
     .catch((reason) => console.error(reason.message))
 }
 getFullEmployeeInfo(20);
@@ -61,24 +62,37 @@ getFullEmployeeInfo(20);
 const myFunction = async () => console.log(await delayMessage());
 
 const delayMessage = () => {
-  return new Promise ((resolve)=> setTimeout(() => resolve("All good"), 2000))
+  return new Promise((resolve) => setTimeout(() => resolve("All good"), 2000))
 };
 myFunction();
 
 //Crea una funció que retorni el doble del número que li passa com a paràmetre després de 2 segons.
 //Crea una altra funció que rebi tres números i calculi la suma dels seus dobles fent servir la funció anterior.
 
-const addUpDoubles = async (number1, number2, number3) =>
-  (await delayedDouble(number1)) +
-  (await delayedDouble(number2)) +
-  (await delayedDouble(number3));
 const delayedDouble = (number) => {
-  return new Promise((resolve, reject) =>
-    !isNaN(number)
-    ? setTimeout(() => resolve(number * 2), 2000)
-    : reject (new Error("Parameters must be numbers"))
-  );
+  return new Promise((resolve, reject) => {
+    isNaN(number)
+      ? reject(new Error("Parameters must be numbers"))
+      : setTimeout(() => resolve(number * 2), 2000)
+  });
 };
-addUpDoubles(1, 3, 4).then((total) => console.log(total));
+
+const addUpDoubles = async (number1, number2, number3) => {
+  const first_double = await delayedDouble(number1)
+    .catch((err) => console.error(err.message))
+  const second_double = await delayedDouble(number2)
+    .catch((err) => console.error(err.message))
+  const third_double = await delayedDouble(number3)
+    .catch((err) => console.error(err.message))
+  return new Promise((resolve, reject) => {
+      const total = first_double + second_double + third_double
+      isNaN(total)
+      ? reject (new Error ("Unable to provide result as parameters are not numbers"))
+      : resolve (total)
+  })
+}
+addUpDoubles(1, 3, "b").then(
+  (total) => console.log(total))
+  .catch((error)=>console.error(error.message));
 
 //Força i captura tants errors com puguis dels nivells 1 i 2.
