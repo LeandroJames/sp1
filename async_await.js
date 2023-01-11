@@ -11,6 +11,10 @@ let employees = [
     id: 3,
     name: "Jeff Bezos",
   },
+  {
+    id: 4,
+    name: "Ermenegildo Fernández",
+  },
 ];
 
 let salaries = [
@@ -31,14 +35,18 @@ let salaries = [
 const getEmployee = (id) => {
   return new Promise((resolve, reject) => {
     const employee = employees.find((elemement) => elemement.id === id);
-    employee ? resolve(employee) : reject(new Error(`No employee found with id ${id}`));
+    isNaN(id)
+      ? reject(new Error("Employee IDs are made up exclusively of numbers. Please check your input"))
+      : employee ? resolve(employee) : reject(new Error(`No employee found with id ${id}`));
   });
 };
 
 const getSalary = (id) => {
   return new Promise((resolve, reject) => {
     const salary = salaries.find((s) => s.id === id);
-    salary ? resolve(salary) : reject(new Error(`No employee found with id ${id}`));
+    isNaN(id)
+      ? reject(new Error("Employee IDs are made up exclusively of numbers. Please check your input"))
+      : salary ? resolve(salary) : reject(new Error(`No salary found for employee with id ${id}`));
   });
 };
 
@@ -53,10 +61,14 @@ const getFullEmployeeInfo = async (soughtEmployee) => {
           console.log(`EMPLOYEE ~ Name: ${name}, Salary: ${salary.salary}`)
         }
       )
+        .catch(
+          (error) => console.error(error.message),
+          console.log(`Employee name: ${name}`)
+        )
     })
     .catch((reason) => console.error(reason.message))
 }
-getFullEmployeeInfo(20);
+getFullEmployeeInfo("Pep");
 
 //Crea una nova funció asíncrona que cridi a una altra que retorni una Promise que efectuï la seva funció resolve() després de 2 segons de la seva invocació.
 const myFunction = async () => console.log(await delayMessage());
@@ -71,28 +83,27 @@ myFunction();
 
 const delayedDouble = (number) => {
   return new Promise((resolve, reject) => {
-    isNaN(number)
-      ? reject(new Error("Parameters must be numbers"))
-      : setTimeout(() => resolve(number * 2), 2000)
+    number
+      ? isNaN(number) | typeof number == "boolean" 
+        ? reject(new Error("Parameters must be numbers"))
+        : setTimeout(() => resolve(number * 2), 2000)
+      : reject(new Error("Please give the function 3 parameters"))
   });
 };
 
 const addUpDoubles = async (number1, number2, number3) => {
   const first_double = await delayedDouble(number1)
-    .catch((err) => console.error(err.message))
   const second_double = await delayedDouble(number2)
-    .catch((err) => console.error(err.message))
   const third_double = await delayedDouble(number3)
-    .catch((err) => console.error(err.message))
   return new Promise((resolve, reject) => {
-      const total = first_double + second_double + third_double
-      isNaN(total)
-      ? reject (new Error ("Unable to provide result as parameters are not numbers"))
-      : resolve (total)
+    const total = first_double + second_double + third_double
+    isNaN(total)
+      ? reject(new Error("Unable to provide result as not all parameters are numbers"))
+      : resolve(total)
   })
 }
-addUpDoubles(1, 3, "b").then(
+addUpDoubles(1, 5, true).then(
   (total) => console.log(total))
-  .catch((error)=>console.error(error.message));
+  .catch((error) => console.error(error.message));
 
 //Força i captura tants errors com puguis dels nivells 1 i 2.
