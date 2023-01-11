@@ -31,14 +31,13 @@ let salaries = [
 const getEmployee = (id) => {
   const findEmployee = new Promise((resolve, reject) => {
     const employee = employees.find((elemement) => elemement.id === id);
-    employee ? resolve(employee) : reject(`No employee found with id ${id}`);
+    employee
+      ? resolve(employee)
+      : reject(new Error(`No employee found with id ${id}`));
   });
-  findEmployee.then(
-    (employee) => console.log(`Employee name: ${employee.name}`),
-    (reason) => {
-      throw new Error(reason);
-    }
-  );
+  findEmployee.then((employee) =>
+    console.log(`Employee name: ${employee.name}`)
+  ).catch((error)=>console.error(error.message));
 };
 
 const getSalary = (id) => {
@@ -51,7 +50,8 @@ const getSalary = (id) => {
     (reason) => {
       throw new Error(reason);
     }
-  );
+  )  .catch((error)=>console.error(error.message));
+  ;
 };
 
 //Crea una funció asíncrona que rebi un id d'empleat/da i imprimeixi per pantalla el nom de l'empleat/da i el seu salari, usant les funcions getEmployee() i getSalary() que has definit a la tasca anterior.
@@ -60,14 +60,14 @@ const showEmployeeInfo = async (id) => {
   try {
     getEmployee(id);
     getSalary(id);
-  } catch (error) {
-    
+  } catch (e) {
+    console.error(e.message);
   }
 };
-showEmployeeInfo(2);
+showEmployeeInfo(25);
 
 //Crea una nova funció asíncrona que cridi a una altra que retorni una Promise que efectuï la seva funció resolve() després de 2 segons de la seva invocació.
-const myFunction = () => delayMessage();
+const myFunction = async () => await delayMessage();
 
 const delayMessage = async () => {
   setTimeout(() => console.log("All good"), 2000);
@@ -81,12 +81,13 @@ const addUpDoubles = async (number1, number2, number3) =>
   (await delayedDouble(number1)) +
   (await delayedDouble(number2)) +
   (await delayedDouble(number3));
-const delayedDouble = async (number) => {
-  let myPromise = new Promise((resolve) =>
-    setTimeout(() => resolve(number * 2), 2000)
+const delayedDouble = (number) => {
+  return new Promise((resolve, reject) =>
+    !isNaN(number)
+    ? setTimeout(() => resolve(number * 2), 2000)
+    : reject (new Error("Parameters must be numbers"))
   );
-  return myPromise;
 };
-addUpDoubles(2, 3, 4).then((total) => console.log(total));
+addUpDoubles(1, 3, 4).then((total) => console.log(total));
 
 //Força i captura tants errors com puguis dels nivells 1 i 2.
