@@ -29,48 +29,39 @@ let salaries = [
 ];
 
 const getEmployee = (id) => {
-  const findEmployee = new Promise((resolve, reject) => {
+  return new Promise((resolve, reject) => {
     const employee = employees.find((elemement) => elemement.id === id);
-    employee
-      ? resolve(employee)
-      : reject(new Error(`No employee found with id ${id}`));
+    employee ? resolve(employee) : reject(new Error(`No employee found with id ${id}`));
   });
-  findEmployee.then((employee) =>
-    console.log(`Employee name: ${employee.name}`)
-  ).catch((error)=>console.error(error.message));
 };
 
 const getSalary = (id) => {
-  const retrieveSalary = new Promise((resolve, reject) => {
+  return new Promise((resolve, reject) => {
     const salary = salaries.find((s) => s.id === id);
-    salary ? resolve(salary) : reject(`No employee found with id ${id}`);
+    salary ? resolve(salary) : reject(new Error(`No employee found with id ${id}`));
   });
-  retrieveSalary.then(
-    (salary) => console.log(`Employee salary: ${salary.salary}`),
-    (reason) => {
-      throw new Error(reason);
-    }
-  )  .catch((error)=>console.error(error.message));
-  ;
 };
 
 //Crea una funció asíncrona que rebi un id d'empleat/da i imprimeixi per pantalla el nom de l'empleat/da i el seu salari, usant les funcions getEmployee() i getSalary() que has definit a la tasca anterior.
 
-const showEmployeeInfo = async (id) => {
-  try {
-    getEmployee(id);
-    getSalary(id);
-  } catch (e) {
-    console.error(e.message);
-  }
-};
-showEmployeeInfo(25);
+const getFullEmployeeInfo = async (soughtEmployee) => {
+  getEmployee(soughtEmployee).then(
+    (employee) => {
+    let name=employee.name
+    getSalary(soughtEmployee, name).then(
+      (salary) => {
+        console.log(`EMPLOYEE ~ Name: ${name}, Salary: ${salary.salary}`)
+      }
+    )})
+    .catch((reason) => console.error(reason.message))
+}
+getFullEmployeeInfo(20);
 
 //Crea una nova funció asíncrona que cridi a una altra que retorni una Promise que efectuï la seva funció resolve() després de 2 segons de la seva invocació.
-const myFunction = async () => await delayMessage();
+const myFunction = async () => console.log(await delayMessage());
 
-const delayMessage = async () => {
-  setTimeout(() => console.log("All good"), 2000);
+const delayMessage = () => {
+  return new Promise ((resolve)=> setTimeout(() => resolve("All good"), 2000))
 };
 myFunction();
 
