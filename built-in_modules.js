@@ -29,13 +29,11 @@
 // original.pipe(zlib.createGzip().on("error", (error)=>console.log(error))).pipe(destination)
 
 // Crea una funció que imprimeixi recursivament un missatge per la consola amb demores d'un segon.
-const delayMessage = (message) => {
-return new Promise((resolve)=>setTimeout (()=>resolve(message), 1000))
-}
 const repeatEndlessly = async (message) => {
   while (true) {
-    console.log(await delayMessage(message))
+    await new Promise((resolve)=>setTimeout (()=>resolve(console.log(message)), 1000))
   }
 }
 const message = "I never repeat myself"
 repeatEndlessly(message)
+
