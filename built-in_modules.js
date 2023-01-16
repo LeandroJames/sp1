@@ -1,3 +1,7 @@
+/* ### READ ME! ###
+Cada exercici té el seu enunciat a sobre. La funció que imprimeix recursivament un missatge per la consola amb demores d'un segon (línees 41 a 48) està comentada, ja que si s'executa al mateix temps que les altres, la consola s'emplena de missatges i és difícil veure altres coses. S'hauria de descomentar per veure'n el resultat. Les altres funcions ja estan invocades a dins del codi. Cada cop que s'executa el codi, s'hauria d'esborrar els arxius que crea. Si no, donarà error: l'algoritme d'encriptació canvia cada cop que s'executa, raó per la qual pot donar lloc a problemes amb la desencriptació.
+*/
+
 //Crea una funció que, en executar-la, escrigui una frase en un fitxer.
 
 const fs = require("fs");
@@ -43,19 +47,19 @@ original.pipe(zlib.createGzip().on("error", (error) => console.log(error))).pipe
 // const message = "I never repeat myself"
 // repeatEndlessly(message)
 
-// //Crea una funció que llisti per la consola el contingut del directori d'usuari/ària de l'ordinador utilizant Node Child Processes.
-// const { exec } = require("node:child_process");
-// const listDirectory = () => {
-// exec("dir", (error, stdout, stderr) => {
-//   if (error) {
-//     console.error(error);
-//     return;
-//   }
-//   console.log(stdout);
-//   console.error(stderr);
-// });
-// };
-// listDirectory()
+//Crea una funció que llisti per la consola el contingut del directori d'usuari/ària de l'ordinador utilizant Node Child Processes.
+const { exec } = require("node:child_process");
+const listDirectory = () => {
+exec("dir", (error, stdout, stderr) => {
+  if (error) {
+    console.error(error);
+    return;
+  }
+  console.log(stdout);
+  console.error(stderr);
+});
+};
+listDirectory()
 
 //Crea una funció que creï dos fitxers codificats en hexadecimal i en base64 respectivament, a partir del fitxer del nivell 1.
 
@@ -93,19 +97,11 @@ const encryptAndDelete = async (path) => {
     fs.unlink(path, ((error) => {
       if (error) console.error(error)
     }))
-    fs.unlink("fascinating_stuff.txt", ((error) => {
-      if (error) console.error(error)
-    }))
   })
 }
-//encryptAndDelete("fascinating_hexbase.txt")
-
-//const encrypted = encrypt("Adiós, mundo cruel")
-//console.log(encrypted)
 
 // Crea una altra funció que desencripti i descodifiqui els fitxers de l'apartat anterior tornant a generar una còpia de l'inicial.
 
-//console.log(await readFile("encrypted_fascinating_base64.txt"))
 
 const decrypt = (file) => {
   return new Promise(async (resolve) => {
@@ -119,36 +115,31 @@ const decrypt = (file) => {
     })
   })
 }
+
+const decode64 = (codedText) => {
+  return new Buffer.from(codedText, "base64").toString("utf-8")
+}
+const decodeHex = (codedText) => {
+  return new Buffer.from(codedText, "hex").toString("utf-8")
+}
+
+// Aquesta funció comprova que els passos anteriors funcionen
+
 const checkWorking = () => {
   setTimeout(async () => {
     encryptAndDelete("fascinating_base64.txt")
-    //await decrypt("encrypted_fascinating_base64.txt").then(
-    //  (content) => console.log(decode64(content))
-    //)
+    encryptAndDelete("fascinating_hexbase.txt")
+    fs.unlink("fascinating_stuff.txt", ((error) => {
+      if (error) console.error(error)
+    }))
   }, 1000)
 
   setTimeout(async () => {
   await decrypt("encrypted_fascinating_base64.txt").then(
-    (content) => console.log(decode64(content))
+    (content) => writeSentenceNewFile(decode64(content), "decoded_decrypted_fascinating_stuff(64).txt")
   )
-}, 10000)}
+  await decrypt("encrypted_fascinating_hexbase.txt").then(
+    (content) => writeSentenceNewFile(decodeHex(content), "decoded_decrypted_fascinating_stuff(hex).txt")
+  )
+}, 5000)}
 checkWorking()
-
-
-// const decrypted64 = decrypt("encrypted_fascinating_base64.txt")
-// const decryptedHex = decrypt("encrypted_fascinating_hexbase.txt")
-const decode64 = (codedText) => {
-  return new Buffer.from(codedText, "base64").toString("utf-8")
-}
-//console.log(decrypted64)
-//console.log(decode64(decrypted64))
-
-// // Create a buffer from the string
-// let bufferObj = Buffer.from(base64string, "base64");
-
-// // Encode the Buffer as a utf8 string
-// let decodedString = bufferObj.toString("utf8");
-
-
-//const decrypted = decrypt(encrypted)
-//console.log(decrypted)
