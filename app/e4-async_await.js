@@ -1,3 +1,6 @@
+// READ ME!!
+// Totes les funcions estan invocades abaix, perquè puguien ser comentades més fàcilment
+
 let employees = [
   {
     id: 1,
@@ -68,7 +71,6 @@ const getFullEmployeeInfo = async (soughtEmployee) => {
     })
     .catch((reason) => console.error(reason.message))
 }
-getFullEmployeeInfo("Pep");
 
 //Crea una nova funció asíncrona que cridi a una altra que retorni una Promise que efectuï la seva funció resolve() després de 2 segons de la seva invocació.
 const myFunction = async () => console.log(await delayMessage());
@@ -76,7 +78,6 @@ const myFunction = async () => console.log(await delayMessage());
 const delayMessage = () => {
   return new Promise((resolve) => setTimeout(() => resolve("All good"), 2000))
 };
-myFunction();
 
 //Crea una funció que retorni el doble del número que li passa com a paràmetre després de 2 segons.
 //Crea una altra funció que rebi tres números i calculi la suma dels seus dobles fent servir la funció anterior.
@@ -102,8 +103,13 @@ const addUpDoubles = async (number1, number2, number3) => {
       : resolve(total)
   })
 }
+
+//Força i captura tants errors com puguis dels nivells 1 i 2.
+
+
+//Invocació de les funcions
+getFullEmployeeInfo("Pep");
+myFunction();
 addUpDoubles(1, 5, true).then(
   (total) => console.log(total))
   .catch((error) => console.error(error.message));
-
-//Força i captura tants errors com puguis dels nivells 1 i 2.
