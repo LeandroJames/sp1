@@ -1,0 +1,1 @@
+Cada exercici té el seu enunciat a sobre. Aquest explica el que hauria de fer cada secció de codi que li segueix.
