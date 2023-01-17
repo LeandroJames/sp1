@@ -13,14 +13,18 @@ const makePromise = (/*resolve, reject,*/ wordKept) => {
 makePromise(/*resolve, reject,*/ false);
 
 //Crea una arrow function que rebi un paràmetre i una funció callback i li passi a la funció un missatge o un altre (que s'imprimirà per consola) en funció del paràmetre rebut.
-const myFunction = (message) => console.log(message);
-const doStuff = (myParameter, myFunction) => {
-  myParameter
+export const messageToCaps = (message) => {
+  if (typeof(message)!=="string") throw new Error ("Please make sure the first parameter is a string")
+  else return message.toUpperCase()
+};
+export const doStuff = (myParameter, myFunction) => {
+  if (typeof(myFunction)!=="function") throw new Error ("Please make sure the second parameter is a function")
+  else return myParameter
     ? myFunction("The truth prevails")
     : myFunction("Another lying toad");
 };
-doStuff(true, myFunction);
-doStuff(false, myFunction);
+console.log(doStuff(true, messageToCaps));
+console.log(doStuff(false, messageToCaps));
 
 //Donats els objectes employees i salaries, crea una arrow function getEmployee() que retorni una Promise efectuant la cerca en l'objecte pel seu id.
 let employees = [

@@ -23,10 +23,10 @@ const getFullEmployeeInfo = async (soughtEmployee) => {
 }
 
 //Crea una nova funció asíncrona que cridi a una altra que retorni una Promise que efectuï la seva funció resolve() després de 2 segons de la seva invocació.
-const myFunction = async () => console.log(await delayMessage());
+export const myFunction = async () => console.log(await delayMessage());
 
-const delayMessage = () => {
-  return new Promise((resolve) => setTimeout(() => resolve("All good"), 2000))
+export const delayMessage = () => {
+  return new Promise((resolve) => {setTimeout(() => resolve("All good"), 2000)})
 };
 
 //Crea una funció que retorni el doble del número que li passa com a paràmetre després de 2 segons.
