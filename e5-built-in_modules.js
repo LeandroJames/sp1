@@ -1,10 +1,13 @@
 /* ### READ ME! ###
-Cada exercici té el seu enunciat a sobre. La funció que imprimeix recursivament un missatge per la consola amb demores d'un segon (línees 41 a 48) està comentada, ja que si s'executa al mateix temps que les altres, la consola s'emplena de missatges i és difícil veure altres coses. S'hauria de descomentar per veure'n el resultat. Les altres funcions ja estan invocades a dins del codi. Cada cop que s'executa el codi, s'hauria d'esborrar els arxius que crea. Si no, donarà error: l'algoritme d'encriptació canvia cada cop que s'executa, raó per la qual pot donar lloc a problemes amb la desencriptació.
+Cada exercici té el seu enunciat a sobre. Totes les funcions estan invocades abaix del tot, perquè puguin ser més fàcilment comentades. Cada cop que s'executa el codi, s'hauria d'esborrar els arxius que crea. Si no, donarà error: l'algoritme d'encriptació canvia cada cop que s'executa, raó per la qual pot donar lloc a problemes amb la desencriptació.
 */
 
 //Crea una funció que, en executar-la, escrigui una frase en un fitxer.
 
 const fs = require("fs");
+const zlib = require("zlib")
+const { exec } = require("node:child_process");
+const crypto = require("crypto");
 const sentence = "What a day to be alive"
 const location = "fascinating_stuff.txt"
 const writeSentenceNewFile = (sentence, location) => {
@@ -29,37 +32,33 @@ const createAndRead = async (location) => {
   writeSentenceNewFile(sentence, location)
   showFileInLocation(location)
 }
-createAndRead(location)
 
 // Crea una funció que comprimeixi el fitxer del nivell 1.
-
-const zlib = require("zlib")
+const compress = () => {
 const original = fs.createReadStream(location)
 const destination = fs.createWriteStream(`${location}.gz`)
 original.pipe(zlib.createGzip().on("error", (error) => console.log(error))).pipe(destination)
+}
 
-// //Crea una funció que imprimeixi recursivament un missatge per la consola amb demores d'un segon.
-// const repeatEndlessly = async (message) => {
-//   while (true) {
-//     await new Promise((resolve)=>setTimeout (()=>resolve(console.log(message)), 1000))
-//   }
-// }
-// const message = "I never repeat myself"
-// repeatEndlessly(message)
+//Crea una funció que imprimeixi recursivament un missatge per la consola amb demores d'un segon.
+const repeatEndlessly = async (message) => {
+  while (true) {
+    await new Promise((resolve)=>setTimeout (()=>resolve(console.log(message)), 1000))
+  }
+}
+const message = "I never repeat myself"
 
 //Crea una funció que llisti per la consola el contingut del directori d'usuari/ària de l'ordinador utilizant Node Child Processes.
-const { exec } = require("node:child_process");
 const listDirectory = () => {
-exec("dir", (error, stdout, stderr) => {
-  if (error) {
-    console.error(error);
-    return;
-  }
-  console.log(stdout);
-  console.error(stderr);
-});
+  exec("dir", (error, stdout, stderr) => {
+    if (error) {
+      console.error(error);
+      return;
+    }
+    console.log(stdout);
+    console.error(stderr);
+  });
 };
-listDirectory()
 
 //Crea una funció que creï dos fitxers codificats en hexadecimal i en base64 respectivament, a partir del fitxer del nivell 1.
 
@@ -75,11 +74,8 @@ const codeInHexAnd64 = async (file) => {
   })
 }
 
-codeInHexAnd64(location)
-
 //Crea una funció que guardi els fitxers del punt anterior, ara encriptats amb l'algoritme aes-192-cbc, i esborri els fitxers inicials.
 
-const crypto = require("crypto");
 const algorithm = "aes-192-cbc"
 const key = crypto.randomBytes(24)
 const iv = crypto.randomBytes(16)
@@ -126,6 +122,9 @@ const decodeHex = (codedText) => {
 // Aquesta funció comprova que els passos anteriors funcionen
 
 const checkWorking = () => {
+  createAndRead(location)
+  compress()
+  codeInHexAnd64(location)
   setTimeout(async () => {
     encryptAndDelete("fascinating_base64.txt")
     encryptAndDelete("fascinating_hexbase.txt")
@@ -135,11 +134,20 @@ const checkWorking = () => {
   }, 1000)
 
   setTimeout(async () => {
-  await decrypt("encrypted_fascinating_base64.txt").then(
-    (content) => writeSentenceNewFile(decode64(content), "decoded_decrypted_fascinating_stuff(64).txt")
-  )
-  await decrypt("encrypted_fascinating_hexbase.txt").then(
-    (content) => writeSentenceNewFile(decodeHex(content), "decoded_decrypted_fascinating_stuff(hex).txt")
-  )
-}, 5000)}
-checkWorking()
+    await decrypt("encrypted_fascinating_base64.txt").then(
+      (content) => writeSentenceNewFile(decode64(content), "decoded_decrypted_fascinating_stuff(64).txt")
+    )
+    await decrypt("encrypted_fascinating_hexbase.txt").then(
+      (content) => writeSentenceNewFile(decodeHex(content), "decoded_decrypted_fascinating_stuff(hex).txt")
+    )
+  }, 5000)
+}
+
+// Aquesta funció mostra el directori per la consola:
+//listDirectory()
+
+// Aquesta funció repeteix un missatge cada segon
+//repeatEndlessly(message)
+
+//Aquesta funció invoca totes les que tenen a veure amb crear fitxers, comprimir, esborrar, codificar, decodificar, encriptar i desencriptar:
+//checkWorking()
