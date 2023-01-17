@@ -25,7 +25,7 @@ console.log(person1.sayMyName());
 class PersonalDetails {
   email;
   bankAccountNumber;
-  constructor(email, bankAccountNumber) {
+  constructor() {
     if (this.constructor == PersonalDetails) {
       throw Error(
         "This information is private and you, my dear, have been granted no access"
@@ -45,7 +45,6 @@ class PersonalDetails {
 //const babyJane = new PersonalDetails("jane_the_babe@email.com", "ES250125358478925")
 
 // This is a clone of the previous class using prototypes
-class ClonedPersonalDetails {}
 // ClonedPersonalDetails.prototype = Object.create(PersonalDetails.prototype, {
 //   constructor: (email, bankAccountNumber) => {
 //     super(email, bankAccountNumber)
@@ -57,7 +56,7 @@ class ClonedPersonalDetails {}
 
 class ClonedPersonalDetails extends PersonalDetails {
   constructor (email, bankAccountNumber) {
-    super(email, bankAccountNumber)
+    super()
     this.email=email;
     this.bankAccountNumber=bankAccountNumber
 }}
@@ -68,7 +67,7 @@ class ClonedPersonalDetails extends PersonalDetails {
 //   __proto__.bankAccountNumber=bankAccountNumber
 // }
 
-console.log(ClonedPersonalDetails)
+console.log(typeof(ClonedPersonalDetails), ClonedPersonalDetails)
 
 const babyJane = new ClonedPersonalDetails("jane_the_babe@email.com", "ES250125358478925")
 console.log(`Baby Jane's email is ${babyJane.getEmail()} and her bank account number is ${babyJane.getBankAccountNumber()}`)

@@ -18,15 +18,20 @@ console.log(`My name is ${returnSurname(surname)}, ${returnFullName(firstName, s
 //Crea una matriu de deu funcions i emplena-la mitjançant un bucle de manera que cada funció compti del 0 al 9 per la consola. Invoca cada funció de l'array iterativament. Haurà de mostrar-se per consola el compte del 0 al 9 deu vegades:
 const compulsiveCounting = []
 const countToNine = () => {
-    for (i=0; i<10; i++){
+    for (let i=0; i<10; i++){
         console.log(i)
     }
 }
-for (i=0; i<10; i++){
+for (let i=0; i<10; i++){
     compulsiveCounting.push(countToNine)
 }
 compulsiveCounting.forEach(element => element())
 
 //Crea una funció anònima autoinvocable igualada a una variable que mostri per consola el nom de l'usuari/ària a rebut com a paràmetre:
 const username = "Perico de los Palotes"
-const showUsername = ((username) => console.log(username))(username)
+const showUsername = ((username) => {
+    console.log(username)
+    return username
+})(username)
+console.log(typeof(showUsername), showUsername)
+//((username) => console.log(username))(username)

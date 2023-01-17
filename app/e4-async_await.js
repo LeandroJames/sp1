@@ -1,57 +1,7 @@
 // READ ME!!
-// Totes les funcions estan invocades abaix, perquè puguien ser comentades més fàcilment
+// Totes les funcions estan invocades abaix, perquè puguien ser comentades més fàcilment. S'han d'importar dues funcions de l'entrega anterior
 
-let employees = [
-  {
-    id: 1,
-    name: "Linux Torvalds",
-  },
-  {
-    id: 2,
-    name: "Bill Gates",
-  },
-  {
-    id: 3,
-    name: "Jeff Bezos",
-  },
-  {
-    id: 4,
-    name: "Ermenegildo Fernández",
-  },
-];
-
-let salaries = [
-  {
-    id: 1,
-    salary: 4000,
-  },
-  {
-    id: 2,
-    salary: 1000,
-  },
-  {
-    id: 3,
-    salary: 2000,
-  },
-];
-
-const getEmployee = (id) => {
-  return new Promise((resolve, reject) => {
-    const employee = employees.find((elemement) => elemement.id === id);
-    isNaN(id)
-      ? reject(new Error("Employee IDs are made up exclusively of numbers. Please check your input"))
-      : employee ? resolve(employee) : reject(new Error(`No employee found with id ${id}`));
-  });
-};
-
-const getSalary = (id) => {
-  return new Promise((resolve, reject) => {
-    const salary = salaries.find((s) => s.id === id);
-    isNaN(id)
-      ? reject(new Error("Employee IDs are made up exclusively of numbers. Please check your input"))
-      : salary ? resolve(salary) : reject(new Error(`No salary found for employee with id ${id}`));
-  });
-};
+import { getEmployee, getSalary} from "./e3-promises_and_callbacks.js";
 
 //Crea una funció asíncrona que rebi un id d'empleat/da i imprimeixi per pantalla el nom de l'empleat/da i el seu salari, usant les funcions getEmployee() i getSalary() que has definit a la tasca anterior.
 
