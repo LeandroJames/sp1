@@ -1,5 +1,5 @@
 //Mostra per la consola el resultat d'una arrow function autoinvocable que sumi dos nombres.
-((num1, num2) => console.log(num1 + num2))(5,7)
+console.log((num1, num2) => (num1 + num2))(5,7)
 
 //Crea una arrow function que, rebent un paràmetre, retorni un objecte amb un atribut que tingui com a valor el paràmetre rebut.
 
@@ -15,11 +15,11 @@ class Person {
   constructor(name) {
     this.name = name;
   }
-  sayMyName = () => this.name;
+  sayMyName = () => console.log(this.name);
 }
 
 const person1 = new Person("Wild Bill");
-console.log(person1.sayMyName());
+person1.sayMyName();
 
 //Escriu una function creadora d'objectes que faci instàncies d'una classe abstracta. Invoca-la amb diferents definicions.
 class PersonalDetails {

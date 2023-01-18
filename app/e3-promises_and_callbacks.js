@@ -1,29 +1,17 @@
 //Crea una funció que retorni una Promise que invoqui la funció resolve() o reject() que rep. Invoca-la passant-li les dues funcions de manera que imprimeixin un missatge diferent depenent de si la Promise es resol o no.
-// No he entès bé el que es vol. Deixo dues opcions:
 
-// OPCIÓ 1
 const makePromise = (wordKept) => {
   return new Promise((resolve, reject) => {
     wordKept
-      ? () => resolve(console.log("I always keep my promises"))
-      : () =>
-          reject(console.log("Sorry, promises are only there to be broken"));
+      ? () => resolve("I always keep my promises")
+      : () => reject("Sorry, promises are only there to be broken");
   });
 };
 
-makePromise(false);
-
-// OPCIÓ 2
-// const makePromise = (resolve, reject, wordKept) => {
-//   return new Promise(() => {
-//     wordKept
-//       ? resolve()
-//       : reject();
-//   });
-// };
-// const resolve = () => (console.log("I always keep my promises"));
-// const reject = () => (console.log("Sorry, promises are only there to be broken"));
-// makePromise(resolve, reject, false)
+makePromise(false).then(
+  (value)=>console.log(value),
+  (reason)=>console.log(reason)
+  );
 
 //Crea una arrow function que rebi un paràmetre i una funció callback i li passi a la funció un missatge o un altre (que s'imprimirà per consola) en funció del paràmetre rebut.
 export const messageToCaps = (message) => {
@@ -113,7 +101,7 @@ const soughtEmployee = 2;
 getEmployee(soughtEmployee)
   .then((employee) => {
     let name = employee.name;
-    getSalary(soughtEmployee, name).then((salary) => {
+    getSalary(soughtEmployee).then((salary) => {
       console.log(`EMPLOYEE ~ Name: ${name}, Salary: ${salary.salary}`);
     });
   })
