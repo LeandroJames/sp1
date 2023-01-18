@@ -1,5 +1,5 @@
 // READ ME!!
-// Totes les funcions estan invocades abaix, perquè puguien ser comentades més fàcilment. S'han d'importar dues funcions de l'entrega anterior
+// Totes les funcions estan invocades abaix, perquè puguin ser comentades més fàcilment. S'han d'importar dues funcions de l'entrega anterior
 
 import { getEmployee, getSalary} from "./e3-promises_and_callbacks.js";
 
