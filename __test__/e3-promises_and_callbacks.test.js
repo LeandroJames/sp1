@@ -38,11 +38,13 @@ describe("get employee salary", () => {
   it("should throw an error given a non-existent employee ID", () => {
     let id = 7;
     let message = `No employee found with id ${id}`;
+    expect.assertions(1)
     getSalary(id).catch((error) => expect(error.message).toBe(message));
   });
   it("should throw an error given a string employee ID", () => {
     let id = "Pete the Beast";
     let message = "Employee IDs are made up exclusively of numbers. Please check your input";
+    expect.assertions(1)
     getSalary(id).catch((error) => expect(error.message).toBe(message));
   });
   it("should return employee salary given an existent ID", () => {
@@ -55,11 +57,13 @@ describe("get employee name", () => {
   it("should throw an error given a non-existent employee ID", () => {
     let id = 7;
     let message = `No employee found with id ${id}`;
+    expect.assertions(1)
     getEmployee(id).catch((error) => expect(error.message).toBe(message));
   });
   it("should throw an error given a string employee ID", () => {
     let id = "Pete the Beast";
     let message = "Employee IDs are made up exclusively of numbers. Please check your input";
+    expect.assertions(1)
     getEmployee(id).catch((error) => expect(error.message).toBe(message));
   });
   it("should return employee salary given an existent ID", () => {
