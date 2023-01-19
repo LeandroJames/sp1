@@ -22,7 +22,7 @@ const person1 = new Person("Wild Bill");
 person1.sayMyName();
 
 //Escriu una function creadora d'objectes que faci instàncies d'una classe abstracta. Invoca-la amb diferents definicions.
-class PersonalDetails {
+export class PersonalDetails {
   constructor() {
     if (this.constructor == PersonalDetails) {
       throw Error(
@@ -44,7 +44,7 @@ class PersonalDetails {
 //console.log(new PersonalDetails("johnsnow@thenorth.org"));
 //const babyJane = new PersonalDetails("jane_the_babe@email.com", "ES250125358478925")
 
-const clonePersonalDetails = (email, bankAccountNumber) => {
+export const clonePersonalDetails = (email, bankAccountNumber) => {
   let clonedPersonalDetails = Object.create(PersonalDetails.prototype)
   clonedPersonalDetails.email = email
   clonedPersonalDetails.bankAccountNumber = bankAccountNumber

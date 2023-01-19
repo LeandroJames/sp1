@@ -18,7 +18,7 @@ const writeSentenceNewFile = (sentence, location) => {
 };
 // Crea una altra funció que mostri per consola el contingut del fitxer de l'exercici anterior.
 
-const readFile = async (path) => {
+export const readFile = async (path) => {
   return new Promise((resolve) =>
     fs.readFile(path, "utf8", (error, contents) => {
       if (error) throw error;
