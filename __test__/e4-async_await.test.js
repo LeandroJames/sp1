@@ -53,10 +53,11 @@ describe("returns the sum of the doubles of three numbers given as parameters", 
         expect(error.message).toBe("Parameters must be numbers")
       })
   })
-  it("should throw error when given only two parameters", ()=> {
-    addUpDoubles(1, 3).catch(
+  it("should throw error when given only two parameters", async ()=> {
+    expect.assertions(1)
+    await addUpDoubles(1, 3).catch(
       (error) => {
-        // jest.runAllTimers()
+        jest.runAllTimers()
         expect(error.message).toBe("Please give the function 3 parameters")
       })
   })
