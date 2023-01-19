@@ -30,11 +30,6 @@ describe("function should return double of input after two seconds", () => {
       expect(error.message).toBe("Parameters must be numbers");
     });
   })
-  it("should throw error given no parameter", () => {
-    delayedDouble().catch((error) => {
-      expect(error.message).toBe("Please give the function 3 parameters");
-    });
-  })
 });
 
 describe("returns the sum of the doubles of three numbers given as parameters", ()=> {
@@ -46,20 +41,21 @@ describe("returns the sum of the doubles of three numbers given as parameters", 
       }
     )
   })
-  it("should throw error when given parameters true, 1, 3", ()=> {
-    addUpDoubles(true, 1, 3).catch(
-      (error) => {
-        // jest.runAllTimers()
-        expect(error.message).toBe("Parameters must be numbers")
-      })
+  it("should throw error when given parameters true, 1, 3", async ()=> {
+    expect.assertions(1)
+    try {
+      await addUpDoubles(true, 1, 3)
+    } catch (error) {
+      expect(error.message).toBe("Parameters must be numbers")
+    }
   })
   it("should throw error when given only two parameters", async ()=> {
     expect.assertions(1)
-    await addUpDoubles(1, 3).catch(
-      (error) => {
-        jest.runAllTimers()
-        expect(error.message).toBe("Please give the function 3 parameters")
-      })
+    try {
+      await addUpDoubles(1, 3)
+    } catch (error) {
+      expect(error.message).toBe("Please provide three parameters")
+    }
   })
 })
-// 
+ 

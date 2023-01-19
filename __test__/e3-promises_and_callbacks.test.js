@@ -1,5 +1,5 @@
 
-import { getSalary, getEmployee, doStuff, messageToCaps } from "./app/e3-promises_and_callbacks.js";
+import { getSalary, getEmployee, doStuff, messageToCaps } from "../app/e3-promises_and_callbacks.js";
 
 //Crea els tests corresponents per verificar el funcionament de les dues funcions de l'exercici Promises i Callbacks N1 E2.
 

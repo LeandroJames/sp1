@@ -58,32 +58,69 @@ class PersonalDetails {
 //     (this.email = email), (this.bankAccountNumber = bankAccountNumber);
 //   };
 
-class AbstractClass {
-  constructor() {
-    //Les classes abstractes no es poden instanciar
-    if (this.constructor === AbstractClass) {
-      throw new Error("this class cannot be instantiated");
-    }
-  }
-  //Funció classe abstracta
-  display() {
-    return "Employee name is: " + this.name;
-  }
-}
+// class AbstractClass {
+//   constructor() {
+//     //Les classes abstractes no es poden instanciar
+//     if (this.constructor === AbstractClass) {
+//       throw new Error("this class cannot be instantiated");
+//     }
+//   }
+//   //Funció classe abstracta
+//   display() {
+//     return "Employee name is: " + this.name;
+//   }
+// }
 
-class clonePersonalDetails {
-  constructor(email, bankAccountNumber) {
-    this.email = email;
-    this.bankAccountNumber = bankAccountNumber;
-  }
-}
+// class clonePersonalDetails {
+//   constructor(email, bankAccountNumber) {
+//     this.email = email;
+//     this.bankAccountNumber = bankAccountNumber;
+//   }
+// }
 
-clonePersonalDetails.prototype = Object.create(PersonalDetails.prototype);
-const babyJane = new clonePersonalDetails("jane_the_babe@email.com", "ES250125358478925");
-const kingCnut = new clonePersonalDetails("the_cnutty_king@email.com", "DN5879200145897");
-console.log(
-   `Baby Jane's email is ${babyJane.getEmail()} and her bank account number is ${babyJane.getBankAccountNumber()}`
-);
-console.log(
-  `King Cnut's email is ${kingCnut.getEmail()} and his bank account number is ${kingCnut.getBankAccountNumber()}`
-)
+// clonePersonalDetails.prototype = Object.create(PersonalDetails.prototype);
+// const babyJane = new clonePersonalDetails("jane_the_babe@email.com", "ES250125358478925");
+// const kingCnut = new clonePersonalDetails("the_cnutty_king@email.com", "DN5879200145897");
+// console.log(
+//    `Baby Jane's email is ${babyJane.getEmail()} and her bank account number is ${babyJane.getBankAccountNumber()}`
+// );
+// console.log(
+//   `King Cnut's email is ${kingCnut.getEmail()} and his bank account number is ${kingCnut.getBankAccountNumber()}`
+// )
+
+// const babyJane = Object.create(PersonalDetails.prototype, {
+//   email:{
+//   value: "jane_the_babe@email.com",
+//   writable: true,
+//   enumerable: true,
+//   configurable: true
+// },
+//   bankAccountNumber: {
+//     value:  "ES250125358478925",
+//     writable: true,
+//     enumerable: true,
+//     configurable: true
+// }})
+
+// const kingCnut = Object.create(PersonalDetails.prototype, {
+//   email:{
+//   value: "the_cnutty_king@email.com",
+//   writable: true,
+//   enumerable: true,
+//   configurable: true
+// },
+//   bankAccountNumber: {
+//     value:  "DN5879200145897",
+//     writable: true,
+//     enumerable: true,
+//     configurable: true
+// }})
+
+// // const babyJane = new clonePersonalDetails("jane_the_babe@email.com", "ES250125358478925");
+// // const kingCnut = new clonePersonalDetails("the_cnutty_king@email.com", "DN5879200145897");
+// console.log(
+//    `Baby Jane's email is ${babyJane.getEmail()} and her bank account number is ${babyJane.getBankAccountNumber()}`
+// );
+// console.log(
+//   `King Cnut's email is ${kingCnut.getEmail()} and his bank account number is ${kingCnut.getBankAccountNumber()}`
+// )

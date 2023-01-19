@@ -31,29 +31,18 @@ export const delayMessage = () => {
 //Crea una altra funció que rebi tres números i calculi la suma dels seus dobles fent servir la funció anterior.
 
 export const delayedDouble = (number) => {
-  return new Promise((resolve, reject) => {
-    number
-      ? isNaN(number) | (typeof number == "boolean")
-        ? reject(new Error("Parameters must be numbers"))
-        : setTimeout(()=>resolve(number * 2), 2000)
-      : reject(new Error("Please give the function 3 parameters"));
-  });
-};
+  return new Promise ((resolve, reject) => {
+   isNaN(number) | (typeof number == "boolean")
+    ? reject(new Error("Parameters must be numbers"))
+    : setTimeout(()=>resolve(number * 2), 2000)
+  })};
 
 export const addUpDoubles = async (number1, number2, number3) => {
+  if (!(number1 && number2 && number3)) throw new Error ("Please provide three parameters")
   const first_double = await delayedDouble(number1);
   const second_double = await delayedDouble(number2);
   const third_double = await delayedDouble(number3);
-  return new Promise((resolve, reject) => {
-    const total = first_double + second_double + third_double;
-    isNaN(total)
-      ? reject(
-          new Error(
-            "Unable to provide result as not all parameters are numbers"
-          )
-        )
-      : resolve(total);
-  });
+  return first_double + second_double + third_double;
 };
 
 //Força i captura tants errors com puguis dels nivells 1 i 2.
@@ -61,6 +50,12 @@ export const addUpDoubles = async (number1, number2, number3) => {
 //Invocació de les funcions
 // getFullEmployeeInfo("Pep");
 // myFunction();
-// addUpDoubles(1, 5, true)
-//   .then((total) => console.log(total))
-//   .catch((error) => console.error(error.message));
+// delayedDouble(5).then(
+//   (values)=> console.log(values)
+// )
+// try {
+//     console.log(await addUpDoubles("Bananas", 3, true))
+// } catch (error) {
+//   console.error(error.message)
+// }
+

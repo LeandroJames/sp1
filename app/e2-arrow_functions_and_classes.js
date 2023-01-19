@@ -10,7 +10,7 @@ const setCarBrand = (brand) => {
 console.log(setCarBrand("Seat"));
 
 //Crea una classe "Persona" que rebi un paràmetre 'nom' en ser instanciada. La classe inclourà un mètode dirNom que imprimeixi per consola el paràmetre 'nom'. Invoca el mètode dirNom des de fora de la classe.
-class Person {
+export class Person {
   name;
   constructor(name) {
     this.name = name;
@@ -58,32 +58,32 @@ class PersonalDetails {
 //     (this.email = email), (this.bankAccountNumber = bankAccountNumber);
 //   };
 
-class AbstractClass {
-  constructor() {
-    //Les classes abstractes no es poden instanciar
-    if (this.constructor === AbstractClass) {
-      throw new Error("this class cannot be instantiated");
-    }
-  }
-  //Funció classe abstracta
-  display() {
-    return "Employee name is: " + this.name;
-  }
-}
+// class AbstractClass {
+//   constructor() {
+//     //Les classes abstractes no es poden instanciar
+//     if (this.constructor === AbstractClass) {
+//       throw new Error("this class cannot be instantiated");
+//     }
+//   }
+//   //Funció classe abstracta
+//   display() {
+//     return "Employee name is: " + this.name;
+//   }
+// }
 
-class clonePersonalDetails {
-  constructor(email, bankAccountNumber) {
-    this.email = email;
-    this.bankAccountNumber = bankAccountNumber;
-  }
-}
+// class clonePersonalDetails {
+//   constructor(email, bankAccountNumber) {
+//     this.email = email;
+//     this.bankAccountNumber = bankAccountNumber;
+//   }
+// }
 
-clonePersonalDetails.prototype = Object.create(PersonalDetails.prototype);
-const babyJane = new clonePersonalDetails("jane_the_babe@email.com", "ES250125358478925");
-const kingCnut = new clonePersonalDetails("the_cnutty_king@email.com", "DN5879200145897");
-console.log(
-   `Baby Jane's email is ${babyJane.getEmail()} and her bank account number is ${babyJane.getBankAccountNumber()}`
-);
-console.log(
-  `King Cnut's email is ${kingCnut.getEmail()} and his bank account number is ${kingCnut.getBankAccountNumber()}`
-)
+// clonePersonalDetails.prototype = Object.create(PersonalDetails.prototype);
+// const babyJane = new clonePersonalDetails("jane_the_babe@email.com", "ES250125358478925");
+// const kingCnut = new clonePersonalDetails("the_cnutty_king@email.com", "DN5879200145897");
+// console.log(
+//    `Baby Jane's email is ${babyJane.getEmail()} and her bank account number is ${babyJane.getBankAccountNumber()}`
+// );
+// console.log(
+//   `King Cnut's email is ${kingCnut.getEmail()} and his bank account number is ${kingCnut.getBankAccountNumber()}`
+// )
