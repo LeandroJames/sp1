@@ -4,10 +4,7 @@ Cada exercici té el seu enunciat a sobre. Totes les funcions estan invocades ab
 
 //Crea una funció que, en executar-la, escrigui una frase en un fitxer.
 
-// const fs = require("fs");
-// const zlib = require("zlib")
-// const { exec } = require("node:child_process");
-// const crypto = require("crypto");
+
 import * as fs from "fs";
 import * as zlib from "node:zlib";
 import exec from "node:child_process";
