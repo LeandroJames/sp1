@@ -4,14 +4,18 @@ Cada exercici té el seu enunciat a sobre. Totes les funcions estan invocades ab
 
 //Crea una funció que, en executar-la, escrigui una frase en un fitxer.
 
-const fs = require("fs");
-const zlib = require("zlib")
-const { exec } = require("node:child_process");
-const crypto = require("crypto");
+// const fs = require("fs");
+// const zlib = require("zlib")
+// const { exec } = require("node:child_process");
+// const crypto = require("crypto");
+import * as fs from "fs";
+import * as zlib from "node:zlib";
+import exec from "node:child_process";
+import * as crypto from "crypto";
 const sentence = "What a day to be alive"
 const location = "fascinating_stuff.txt"
 const writeSentenceNewFile = (sentence, location) => {
-  fs.appendFile(location, sentence, (error) => {
+  fs.writeFile(location, sentence, (error) => {
     if (error) throw error;
     console.log("File saved!");
   });
@@ -140,7 +144,7 @@ const checkWorking = () => {
     await decrypt("encrypted_fascinating_hexbase.txt").then(
       (content) => writeSentenceNewFile(decodeHex(content), "decoded_decrypted_fascinating_stuff(hex).txt")
     )
-  }, 5000)
+  }, 2000)
 }
 
 // Aquesta funció mostra el directori per la consola:
@@ -150,4 +154,4 @@ const checkWorking = () => {
 //repeatEndlessly(message)
 
 //Aquesta funció invoca totes les que tenen a veure amb crear fitxers, comprimir, esborrar, codificar, decodificar, encriptar i desencriptar:
-//checkWorking()
+checkWorking()
