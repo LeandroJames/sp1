@@ -8,14 +8,15 @@ import * as fs from "fs";
 import * as zlib from "node:zlib";
 import exec from "node:child_process";
 import * as crypto from "crypto";
-const sentence = "What a day to be alive!";
+const sentence = "What a day to be alive";
 const location = "fascinating_stuff.txt";
 const writeSentenceNewFile = async (sentence, location) => {
   fs.writeFile(location, sentence, (error) => {
     if (error) {
-      console.log(sentence);
+      ;
       console.log(error);
     }
+    console.log(sentence)
     console.log("File saved!");
   });
 };
@@ -125,15 +126,7 @@ const deleteFile = async (file) => {
   });
 };
 
-// Aquesta funció comprova que els passos anteriors funcionen
-
-const checkWorking = async () => {
-  await createAndRead(location);
-  await compress();
-  await codeInHexAnd64(location);
-  await encryptAndDelete("fascinating_base64.txt");
-  await encryptAndDelete("fascinating_hexbase.txt");
-  await deleteFile("fascinating_stuff.txt");
+const decryptAndDecode = async () => {
   let decrypted64 = await decrypt("encrypted_fascinating_base64.txt");
   let decoded64 = await decode64(decrypted64);
   await writeSentenceNewFile(
@@ -145,14 +138,19 @@ const checkWorking = async () => {
   await writeSentenceNewFile(
     decodedHex,
     "decoded_decrypted_fascinating_stuff(hex).txt"
-  );
-  // //decrypted = await depr
-  // await decrypt("encrypted_fascinating_hexbase.txt").then((content) =>
-  //   writeSentenceNewFile(
-  //     decodeHex(content),
-  //     "decoded_decrypted_fascinating_stuff(hex).txt"
-  //   )
-  // );
+  )
+}
+
+// Aquesta funció comprova que els passos anteriors funcionen
+
+const checkWorking = async () => {
+  await createAndRead(location);
+  await compress();
+  await codeInHexAnd64(location);
+  await encryptAndDelete("fascinating_base64.txt");
+  await encryptAndDelete("fascinating_hexbase.txt");
+  await deleteFile("fascinating_stuff.txt");
+  await decryptAndDecode()
 };
 
 // Aquesta funció mostra el directori per la consola:
