@@ -8,7 +8,8 @@ import {
 
 describe("creates object with attribute 'name' and method 'sayMyName", () => {
   const johnnyTheGun = new Person("Johnny 'the Gun'");
-  it("should call method 'sayMyName'", () => {
+
+  it("should have a name property", () => {
     expect(johnnyTheGun.name).toBe("Johnny 'the Gun'");
   });
   it("should create an object with attribute 'name'", () => {

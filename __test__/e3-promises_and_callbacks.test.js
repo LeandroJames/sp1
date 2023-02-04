@@ -5,45 +5,6 @@ import {
   messageToCaps,
 } from "../app/e3-promises_and_callbacks.js";
 
-//Crea els tests corresponents per verificar el funcionament de les dues funcions de l'exercici Promises i Callbacks N1 E2.
-// jest.mock("../app/employee_data.json", () => {
-//   return [
-//     {
-//       id: 1,
-//       name: "Linux Torvalds",
-//     },
-// //     {
-// //       id: 2,
-// //       name: "Bill Gates",
-// //     },
-// //     {
-// //       id: 3,
-// //       name: "Jeff Bezos",
-// //     },
-// //     {
-// //       id: 4,
-// //       name: "Hermenegildo Pérez",
-// //     },
-//   ];
-// });
-
-// jest.mock("../app/salary_data.json", () => {
-//   return [
-//     {
-//       id: 1,
-//       salary: 4000,
-//     },
-//     {
-//       id: 2,
-//       salary: 1000,
-//     },
-//     {
-//       id: 3,
-//       salary: 2000,
-//     },
-//   ];
-// });
-
 describe("returns a string in caps", () => {
   it("should throw an error given something other than a string", () => {
     try {
