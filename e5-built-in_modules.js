@@ -4,15 +4,18 @@ Cada exercici té el seu enunciat a sobre. Totes les funcions estan invocades ab
 
 //Crea una funció que, en executar-la, escrigui una frase en un fitxer.
 
-const fs = require("fs");
-const zlib = require("zlib")
-const { exec } = require("node:child_process");
-const crypto = require("crypto");
-const sentence = "What a day to be alive"
-const location = "fascinating_stuff.txt"
-const writeSentenceNewFile = (sentence, location) => {
-  fs.appendFile(location, sentence, (error) => {
-    if (error) throw error;
+import * as fs from "fs";
+import * as zlib from "node:zlib";
+import exec from "node:child_process";
+import * as crypto from "crypto";
+const sentence = "What a day to be alive!";
+const location = "fascinating_stuff.txt";
+const writeSentenceNewFile = async (sentence, location) => {
+  fs.writeFile(location, sentence, (error) => {
+    if (error) {
+      console.log(sentence);
+      console.log(error);
+    }
     console.log("File saved!");
   });
 };
@@ -21,32 +24,37 @@ const writeSentenceNewFile = (sentence, location) => {
 const readFile = async (path) => {
   return new Promise((resolve) =>
     fs.readFile(path, "utf8", (error, contents) => {
-      if (error) throw error;
+      if (error) console.error(error);
       resolve(contents)
     }))
 }
+
 const showFileInLocation = async (location) => {
-  console.log(await readFile(location))
-}
+  console.log(await readFile(location));
+};
 const createAndRead = async (location) => {
-  writeSentenceNewFile(sentence, location)
-  showFileInLocation(location)
-}
+  await writeSentenceNewFile(sentence, location);
+  await showFileInLocation(location);
+};
 
 // Crea una funció que comprimeixi el fitxer del nivell 1.
-const compress = () => {
-const original = fs.createReadStream(location)
-const destination = fs.createWriteStream(`${location}.gz`)
-original.pipe(zlib.createGzip().on("error", (error) => console.log(error))).pipe(destination)
-}
+const compress = async () => {
+  const original = fs.createReadStream(location);
+  const destination = fs.createWriteStream(`${location}.gz`);
+  original
+    .pipe(zlib.createGzip().on("error", (error) => console.log(error)))
+    .pipe(destination);
+};
 
 //Crea una funció que imprimeixi recursivament un missatge per la consola amb demores d'un segon.
 const repeatEndlessly = async (message) => {
   while (true) {
-    await new Promise((resolve)=>setTimeout (()=>resolve(console.log(message)), 1000))
+    await new Promise((resolve) =>
+      setTimeout(() => resolve(console.log(message)), 1000)
+    );
   }
-}
-const message = "I never repeat myself"
+};
+const message = "I never repeat myself";
 
 //Crea una funció que llisti per la consola el contingut del directori d'usuari/ària de l'ordinador utilizant Node Child Processes.
 const listDirectory = () => {
@@ -65,83 +73,87 @@ const listDirectory = () => {
 //console.log(readFile(location))
 
 const codeInHexAnd64 = async (file) => {
-  await readFile(file).then((content) => {
-    const buff = new Buffer.from(String(content))
-    const contentBase64 = buff.toString("base64")
-    const contentHexBase = buff.toString('hex')
-    writeSentenceNewFile(contentBase64, "fascinating_base64.txt")
-    writeSentenceNewFile(contentHexBase, "fascinating_hexbase.txt")
-  })
-}
+  const content = await readFile(file);
+  const buff = new Buffer.from(String(content));
+  const contentBase64 = buff.toString("base64");
+  const contentHexBase = buff.toString("hex");
+  await writeSentenceNewFile(contentBase64, "fascinating_base64.txt");
+  await writeSentenceNewFile(contentHexBase, "fascinating_hexbase.txt");
+  console.log(contentHexBase)
+};
 
 //Crea una funció que guardi els fitxers del punt anterior, ara encriptats amb l'algoritme aes-192-cbc, i esborri els fitxers inicials.
 
-const algorithm = "aes-192-cbc"
-const key = crypto.randomBytes(24)
-const iv = crypto.randomBytes(16)
-const encrypt = (text) => {
-  const cipher = crypto.createCipheriv(algorithm, key, iv)
-  let encrypted = cipher.update(text, "utf8", "hex")
-  encrypted += cipher.final("hex")
-  return encrypted
-}
+const algorithm = "aes-192-cbc";
+const key = crypto.randomBytes(24);
+const iv = crypto.randomBytes(16);
+const encrypt = async (text) => {
+  const cipher = crypto.createCipheriv(algorithm, key, iv);
+  let encrypted = cipher.update(text, "utf8", "hex");
+  encrypted += cipher.final("hex");
+  return encrypted;
+};
 
 const encryptAndDelete = async (path) => {
-  await readFile(path).then((contents) => {
-    const encryptedContents = encrypt(String(contents))
-    writeSentenceNewFile(encryptedContents, `encrypted_${path}`)
-    fs.unlink(path, ((error) => {
-      if (error) console.error(error)
-    }))
-  })
-}
+  const contents = await readFile(path);
+  const encryptedContents = await encrypt(String(contents));
+  console.log(contents);
+  await writeSentenceNewFile(encryptedContents, `encrypted_${path}`);
+  fs.unlink(path, (error) => {
+    if (error) console.error(error);
+  });
+};
 
 // Crea una altra funció que desencripti i descodifiqui els fitxers de l'apartat anterior tornant a generar una còpia de l'inicial.
 
+const decrypt = async (file) => {
+  let content = await readFile(file);
+  const decipher = crypto.createDecipheriv(algorithm, key, iv);
+  return decipher.update(String(content), "hex", "utf8");
+};
 
-const decrypt = (file) => {
-  return new Promise(async (resolve) => {
-    await readFile(file).then((content) => {
-      console.log(content)
-      const decipher = crypto.createDecipheriv(algorithm, key, iv)
-      let decrypted = decipher.update(String(content), "hex", "utf8")
-      decrypted += decipher.final("utf8")
-      console.log(decrypted)
-      resolve(decrypted)
-    })
-  })
-}
+const decode64 = async (codedText) => {
+  return new Buffer.from(codedText, "base64").toString("utf-8");
+};
+const decodeHex = async (codedText) => {
+  return new Buffer.from(codedText, "hex").toString("utf-8");
+};
 
-const decode64 = (codedText) => {
-  return new Buffer.from(codedText, "base64").toString("utf-8")
-}
-const decodeHex = (codedText) => {
-  return new Buffer.from(codedText, "hex").toString("utf-8")
-}
+const deleteFile = async (file) => {
+  fs.unlink(file, (error) => {
+    if (error) console.error(error);
+  });
+};
 
 // Aquesta funció comprova que els passos anteriors funcionen
 
-const checkWorking = () => {
-  createAndRead(location)
-  compress()
-  codeInHexAnd64(location)
-  setTimeout(async () => {
-    encryptAndDelete("fascinating_base64.txt")
-    encryptAndDelete("fascinating_hexbase.txt")
-    fs.unlink("fascinating_stuff.txt", ((error) => {
-      if (error) console.error(error)
-    }))
-  }, 1000)
-
-  setTimeout(async () => {
-    await decrypt("encrypted_fascinating_base64.txt").then(
-      (content) => writeSentenceNewFile(decode64(content), "decoded_decrypted_fascinating_stuff(64).txt")
-    )
-    await decrypt("encrypted_fascinating_hexbase.txt").then(
-      (content) => writeSentenceNewFile(decodeHex(content), "decoded_decrypted_fascinating_stuff(hex).txt")
-    )
-  }, 5000)
-}
+const checkWorking = async () => {
+  await createAndRead(location);
+  await compress();
+  await codeInHexAnd64(location);
+  await encryptAndDelete("fascinating_base64.txt");
+  await encryptAndDelete("fascinating_hexbase.txt");
+  await deleteFile("fascinating_stuff.txt");
+  let decrypted64 = await decrypt("encrypted_fascinating_base64.txt");
+  let decoded64 = await decode64(decrypted64);
+  await writeSentenceNewFile(
+    decoded64,
+    "decoded_decrypted_fascinating_stuff(64).txt"
+  );
+  let decryptedHex = await decrypt("encrypted_fascinating_hexbase.txt");
+  let decodedHex = await decodeHex(decryptedHex);
+  await writeSentenceNewFile(
+    decodedHex,
+    "decoded_decrypted_fascinating_stuff(hex).txt"
+  );
+  // //decrypted = await depr
+  // await decrypt("encrypted_fascinating_hexbase.txt").then((content) =>
+  //   writeSentenceNewFile(
+  //     decodeHex(content),
+  //     "decoded_decrypted_fascinating_stuff(hex).txt"
+  //   )
+  // );
+};
 
 // Aquesta funció mostra el directori per la consola:
 //listDirectory()
@@ -150,4 +162,4 @@ const checkWorking = () => {
 //repeatEndlessly(message)
 
 //Aquesta funció invoca totes les que tenen a veure amb crear fitxers, comprimir, esborrar, codificar, decodificar, encriptar i desencriptar:
-//checkWorking()
+checkWorking();
