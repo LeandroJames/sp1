@@ -7,24 +7,26 @@ import { getEmployee, getSalary } from "./e3-promises_and_callbacks.js";
 
 const getFullEmployeeInfo = async (soughtEmployee) => {
   try {
-    const employee = await getEmployee(soughtEmployee)
-    try {
-      const salary = await getSalary(employee)
-      console.log(`EMPLOYEE ~ Name: ${name}, Salary: ${salary}`)
-    }catch{
-      console.error(error.message)
-      console.log(`Employee name: ${name}`)
-    }
+    const employee = await getEmployee(soughtEmployee);
+    const salary = await getSalary(employee);
+    console.log(`EMPLOYEE ~ Name: ${name}, Salary: ${salary}`);
   } catch (error) {
-        console.error(error.message);
+    console.error(error.message);
   }
 };
 
 //Crea una nova funció asíncrona que cridi a una altra que retorni una Promise que efectuï la seva funció resolve() després de 2 segons de la seva invocació.
-export const myFunction = async () => console.log(await delayMessage());
 
 export const delayMessage = () => {
-  return new Promise((resolve) => setTimeout(()=>resolve("All good"), 2000));
+  return new Promise((resolve) => setTimeout(() => resolve("All good"), 2000));
+};
+
+export const myFunction = async () => {
+  try {
+  console.log(await delayMessage())
+  } catch (error){
+    console.error(error)
+  }
 };
 
 //Crea una funció que retorni el doble del número que li passa com a paràmetre després de 2 segons.
@@ -35,25 +37,20 @@ export const delayedDouble = (number) => {
     number
       ? isNaN(number) | (typeof number == "boolean")
         ? reject(new Error("Parameters must be numbers"))
-        : setTimeout(()=>resolve(number * 2), 2000)
+        : setTimeout(() => resolve(number * 2), 2000)
       : reject(new Error("Please give the function 3 parameters"));
   });
 };
 
 export const addUpDoubles = async (number1, number2, number3) => {
-  const first_double = await delayedDouble(number1);
-  const second_double = await delayedDouble(number2);
-  const third_double = await delayedDouble(number3);
-  return new Promise((resolve, reject) => {
-    const total = first_double + second_double + third_double;
-    isNaN(total)
-      ? reject(
-          new Error(
-            "Unable to provide result as not all parameters are numbers"
-          )
-        )
-      : resolve(total);
-  });
+  try {
+    const first_double = await delayedDouble(number1);
+    const second_double = await delayedDouble(number2);
+    const third_double = await delayedDouble(number3);
+    return first_double + second_double + third_double;
+  } catch (error) {
+    console.error(error.message);
+  }
 };
 
 //Força i captura tants errors com puguis dels nivells 1 i 2.
@@ -61,6 +58,4 @@ export const addUpDoubles = async (number1, number2, number3) => {
 //Invocació de les funcions
 // getFullEmployeeInfo("Pep");
 // myFunction();
-// addUpDoubles(1, 5, true)
-//   .then((total) => console.log(total))
-//   .catch((error) => console.error(error.message));
+addUpDoubles(1, 5, true);
